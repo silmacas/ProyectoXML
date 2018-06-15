@@ -1,31 +1,10 @@
-"""
-1. Partidos ganados por equipo
 
-2. Nombres de los equipos sin repetir ninguno.
-
-3. Partidos en los que se han sacado más de X tarjetas amarillas. (Pide un valor para X y muestra los partidos en los que se han sacado más de X tarjetas amarillas)
-
-4. Salir
-
-Para realizar lo anterior debéis implementar y utilizar las siguientes funciones:
-
-menu() -> Muestra el menú y devuelve la opción seleccionada por el usuario.
-
-leerPartidos() -> Función que lee el XML y devuelve una lista con los partidos siendo cada partido un diccionario con los siguientes datos:
-
-partido { local: "Celtic", visitante: "Hearts", "Amarillas": "4", "GolesLocal": "4", “GolesVisitante”: “1”}
-
-numeroPartidos(numeroAmarillas) -> Recibe un número de tarjetas amarillas y devuelve el número de partidos en los que se han sacado más de ese número de amarillas.
-
-partidosGanados(equipo) : Recibe un equipo y devuelve el número de partidos que ha ganado.
-
-"""
 from lxml import etree
 doc = etree.parse('LeagueAndSeason.xml')
 from pprint import pprint
 import os
 partidos=doc.findall('Match')
-salir="no"
+salir="no" #iniciamos esta variable a "no" para usarla en el while.
 
 def menu():
 	print("\n=========== Menú liga Escocesa ===========\n")
@@ -88,17 +67,17 @@ def partidosGanados(equipo):
 			if golesvisitante>goleslocal:
 				contador=contador+1
 				error+=1
-	if error<2:
+	if error<2: #control de errores. Nombre de equipo escrito de forma incorrecta 
 		input("\nNombre incorrecto! \nPulse Intro para continuar: ")
-		menu()
+		menu() #Muestro de nuevo el menú.
 	return contador	
 
-while salir == "no":
+while salir == "no": 
 	opcion=menu()
 	if opcion=="1":
 		os.system("cls")
 		equipo=(input("Dime el nombre de un equipo: "))
-		numpartido=partidosGanados(equipo)
+		numpartido=partidosGanados(equipo) #metemos la funcion en una variable para que nos devuelva los partidos ganados
 		print('\nEl número de partidos que ha ganado este equipo es de: ', numpartido)
 	elif opcion=="2":
 		listapar=leerPartidos()
